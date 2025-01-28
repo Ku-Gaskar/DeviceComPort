@@ -1,5 +1,6 @@
 import time
 import serial.tools.list_ports
+from serial_settings_ini import SerialSettings
 
 
 
@@ -83,3 +84,7 @@ def read_bytes(ser, num_bytes):
 
 if __name__ == '__main__':
     ports = read_available_serial_port()
+    settings = SerialSettings("configs_com.ini")
+    print(settings.config["Serial"].get("port"))
+
+
