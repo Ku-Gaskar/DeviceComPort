@@ -6,6 +6,8 @@ import serial.tools.list_ports
 def read_available_serial_port() ->list :
     # Получаем список всех доступных портов
     list_ports = serial.tools.list_ports.comports()
+    if not list_ports:
+        print("No available serial port")
 
     # Выводим информацию о каждом порте
     for port in list_ports:
