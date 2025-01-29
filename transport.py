@@ -2,6 +2,7 @@ import configparser
 import os
 from typing import Optional
 import serial
+import serial.tools.list_ports
 
 class SerialSettings:
     """Класс для управления настройками COM-порта через INI файл"""
@@ -74,3 +75,10 @@ class SerialSettings:
         except serial.SerialException as e:
             print(f"Ошибка при создании соединения: {e}")
             return None
+
+    # Дополнительные полезные функции
+    @staticmethod
+    def list_available_ports():
+        """Получение списка доступных COM портов"""
+        ports = serial.tools.list_ports.comports()
+        return [port.device for port in ports]
