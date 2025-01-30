@@ -1,5 +1,4 @@
 import tkinter as tk
-from doctest import master
 from tkinter import ttk, scrolledtext, messagebox
 
 from drv_command import DrvCommand
@@ -8,17 +7,14 @@ from transport import SerialSettings
 
 
 class MainApplication(tk.Tk):
-    # def __init__(self, driver: DrvCommand):
     def __init__(self):
         super().__init__()
         # Инициализируем менеджер настроек
         self.settings_manager = SerialSettings('configs_com.ini')
         self.drv = None
-        # self.root = root
         self.title("Устройство ЯК-001")
         self.geometry("450x450")  # Увеличил высоту для слайдера
         self.resizable(False, False)
-
 
         # состояние экрана начальное - потушен
         self.is_turquoise = False
@@ -142,14 +138,9 @@ class MainApplication(tk.Tk):
             padx=20
         )
 
-
         self.btn_test.grid(row=0, column=0, padx=5, pady=5)
         self.btn_reset.grid(row=0, column=1, padx=5, pady=5)
         self.change_color_button.grid(row=1, column=0, columnspan=2, padx=5, pady=20)
-
-        # self.btn_test.pack(in_=self.button_frame)
-        # self.btn_reset.pack(in_=self.button_frame)
-        # self.change_color_button.pack(in_=self.button_frame)
 
     @staticmethod
     def rgb_to_hex(r, g, b):
@@ -204,10 +195,11 @@ class MainApplication(tk.Tk):
             self.is_turquoise = False
             for widget in list_el:
                 widget.config(state="disabled")
+            self.drv.close()
 
     def test_connect(self):
         if self.drv.is_connection():
-            self.text_area.insert(tk.END,"Устройство готово к работе\n")
+            self.text_area.insert(tk.END,"Устройство готово к работе!\n")
         else:
             self.text_area.insert(tk.END,"Устройство не 'отвечает'!\n")
 

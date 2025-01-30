@@ -64,7 +64,7 @@ class DrvCommand:
     def reset(self):
         self.write(RESET)
 
-    def is_connection(self)-> bool:
+    def is_connection(self) -> bool:
         self.write(REQUEST_READY)
         ok, fail = b'#GLHHHH\r', b'#GLQQQQ\r'
         response = self._conn.readline(8)
@@ -77,12 +77,5 @@ class DrvCommand:
             return False
             # raise Exception("Not a valid response")
 
-
-
-if __name__ == '__main__':
-    drv = DrvCommand(None)
-    print(drv.prepare_frame(MOVE_TO_Y, 5689))
-    drv.y = 10
-    drv.x = 11
-    drv.z = 1015
-    drv.br = 120
+    def close(self):
+        self._conn.close()
